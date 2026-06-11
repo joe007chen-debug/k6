@@ -1,18 +1,22 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+import { htmlReport } from "./bundle.js";
 
-// 压测配置
 export const options = {
-  vus: 5,    // 虚拟用户数
-  duration: '10s' // 压测时长30秒
+  vus: 5,
+  duration: '10s'
 };
 
-// 每个VU循环执行逻辑
 export default function () {
   const res = http.get('https://httpbin.org/get');
-  // 断言：状态码200
   check(res, {
     'status is 200': (r) => r.status === 200,
   });
-  sleep(1); // 每个请求间隔1秒
+  sleep(1);
+}
+
+export function handleSummary(data) {
+  return {
+    "summary.html": htmlReport(data),
+  };
 }
