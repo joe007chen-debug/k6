@@ -1,0 +1,21 @@
+name: k6 Performance Test
+
+# 触发时机：push到main、提PR到main都跑
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest   # 用Ubuntu跑（官方action只保证Linux）
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run k6 test
+        uses: grafana/k6-action@v0.3.1  # 官方action
+        with:
+          filename: js/test.js
+          # flags: --vus 10 --duration 30s  # 可加参数
