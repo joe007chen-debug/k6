@@ -4,7 +4,7 @@ import { check, sleep } from 'k6';
 // 压测配置
 export const options = {
   vus: 5,    // 虚拟用户数
-  duration: '10' // 压测时长30秒
+  duration: '10s' // 压测时长30秒
 };
 
 // 每个VU循环执行逻辑
